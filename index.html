@@ -2,6 +2,7 @@
 <html>
 
 <head>
+  <meta charset="utf-8">
   <title>Upload plików</title>
   <style>
     .file {
@@ -32,7 +33,9 @@
 
         <div class="file">
          
-          <p><a :href="'/uploads/'+file">{{prepareName(file)}}</a></p>
+          <p><a :href="'/uploads/'+file">{{prepareName(file)}}
+            <img :src="'/uploads/'+file" alt="obrazek" v-if="getFileExt(file) == 'jpg'">
+          </a></p>
         
         </div>
 
@@ -62,14 +65,14 @@
         fetch('viewfiles.php').then((res) => res.json()).then((res) => { self.files = res; self.files.splice(0, 2) });
       },
       methods: {
-        getFileExt() {
-          return filename.split('.').pop();
+        getFileExt(file) {
+          return file.split('.').pop();
         },
         prepareName(str){
           let parts = str.split('.');
           let name = parts[0]
           let ext = parts[1]
-          if (parts[0].length > 10) name = name.slice(0,5);
+          if (parts[0].length > 10) name = name.slice(0,10)+'...' ;
           return   name+'.'+ext;
 
         }
