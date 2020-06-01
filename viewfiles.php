@@ -1,5 +1,6 @@
 <?php
-$dir    = 'C:\PROJEKTY\galeria\uploads';
+$base =  realpath('');
+$dir    = $base.'/uploads';
 $files1 = scandir($dir);
 // $files2 = scandir($dir, 1);
 
