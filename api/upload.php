@@ -1,10 +1,25 @@
-<a href="/">Main page</a>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Upload plików</title>
+</head>
+<body>
+
+
+
+<div style="display:flex;width:90%;margin:auto">
+<a href="/" style="margin-right:50px">Main page</a>
+<a href="/uploads">Files</a>
+</div>
+
 
 <?php
 $target_dir = "uploads/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+
 
 // Check if image file is a actual image or fake image
 if(isset($_POST["submit"])) {

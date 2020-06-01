@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Upload plików</title>
+  <style>
+    .file {
+      width: 100px;
+      height: 100px;
+      padding: 10px;
+      margin: 5px;
+      border: 1px black solid;
+    }
+  </style>
+
+</head>
+
+<body>
+
+
+
+  <div style="width:90%;margin:auto" id="app">
+
+
+    <div style="display:flex">
+      <div v-for="file in files">
+
+        <div class="file">
+          <a :href="'/uploads/'+file">{{file}}</a>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <form action="api/upload.php" method="post" enctype="multipart/form-data">
+      Select image to upload:
+      <input type="file" name="fileToUpload" id="fileToUpload">
+      <input type="submit" value="Upload Image" name="submit">
+
+    </form>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
+
+  <script>
+    let app = new Vue({
+      el: '#app',
+      data: {
+        files: []
+      },
+      mounted() {
+        let self = this;
+        fetch('viewfiles.php').then((res) => res.json()).then((res) => { self.files = res; self.files.splice(0, 2) });
+      },
+      methods: {
+        getFileExt() {
+          return filename.split('.').pop();
+        }
+      }
+    })
+
+  </script>
+
+</body>
+
+</html>
