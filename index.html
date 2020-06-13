@@ -6,8 +6,8 @@
   <title>Upload plików</title>
   <style>
     .file {
-      width: 100px;
-      height: 100px;
+      width: 150px;
+      height: 150px;
       padding: 10px;
       margin: 5px;
       border: 1px black solid;
@@ -34,7 +34,7 @@
         <div class="file">
          
           <p><a :href="'/uploads/'+file">{{prepareName(file)}}
-            <img :src="'/uploads/'+file" alt="obrazek" v-if="getFileExt(file) == 'jpg'">
+            <img :src="'/uploads/'+file" alt="obrazek" v-if="getFileExt(file) == 'jpg'" class="img-fluid">
           </a></p>
         
         </div>
