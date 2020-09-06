@@ -28,14 +28,14 @@
   <div style="width:90%;margin:auto" id="app">
 
 
-    <div style="display:flex">
+    <div style="display:flex;flex-wrap:wrap">
       <div v-for="file in files">
 
         <div class="file">
          
-          <p><a :href="'/uploads/'+file">{{prepareName(file)}}
-            <img :src="'/uploads/'+file" alt="obrazek" v-if="getFileExt(file) == 'jpg'" class="img-fluid">
-          </a></p>
+          <p><a :href="'/uploads/'+file">{{prepareName(file)}}</a></p>
+            <img :src="'/uploads/'+file" style="max-height:100px" alt="obrazek" v-if="getFileExt(file) == 'jpg'" class="img-fluid">
+         
         
         </div>
 
