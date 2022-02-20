@@ -28,7 +28,10 @@
 
 
   include('dir.php');
-  $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+
+  $folder = $_GET['folder'];
+
+  $target_file = $target_dir . $folder . $ukosnik. basename($_FILES["fileToUpload"]["name"]);
   $uploadOk = 1;
   $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 

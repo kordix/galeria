@@ -13,12 +13,23 @@
       border: 1px black solid;
     }
 
-    .file > p {
-      word-wrap:break-word
+    .folder {
+      width: 150px;
+      height: 150px;
+      padding: 10px;
+      margin: 5px;
+      border: 1px black solid;
+      cursor: pointer;
+    }
+
+
+    .file>p {
+      word-wrap: break-word
     }
   </style>
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  </script>
 </head>
 
 <body>
@@ -27,41 +38,57 @@
 
   <div style="width:90%;margin:auto" id="app">
     <div>
-      <a href="/uploading.html" style="margin-right:50px;font-size:20px;text-decoration:none;font-family:arial">Uploading strona</a>
+      <a href="/uploading.html"
+        style="margin-right:50px;font-size:20px;text-decoration:none;font-family:arial">Uploading strona</a>
+
+      <div style="display:flex;flex-wrap:wrap;">
+        <div class="folder" @click="folder='zakopane';loadData()">
+          <p>Zakopane</p>
+        </div>
+
+        <div class="folder" @click="folder='inne';loadData()">
+          <p>Inne</p>
+        </div>
+
+
+      </div>
 
 
 
-    <div style="display:flex;flex-wrap:wrap">
-      <div v-for="file in files">
 
-        <div class="file">
-         
-          <p><a :href="'/uploads/'+file">{{prepareName(file)}}</a></p>
-            <img :src="'/uploads/'+file" style="max-height:100px" alt="obrazek" v-if="getFileExt(file) == 'jpg'" class="img-fluid">
-         
-        
+
+      <div style="display:flex;flex-wrap:wrap">
+        <div v-for="file in files">
+
+          <div class="file">
+
+            <p><a :href="'/uploads/'+folder+'/'+file">{{prepareName(file)}}</a></p>
+            <img :src="'/uploads/'+folder+'/'+file" style="max-height:100px" alt="obrazek"
+              v-if="getFileExt(file) == 'jpg'" class="img-fluid">
+
+
+          </div>
+
         </div>
 
       </div>
 
+
+      <form :action="'api/upload.php?folder='+folder" method="post" enctype="multipart/form-data">
+        Select image to upload:
+        <input type="file" name="fileToUpload" id="fileToUpload">
+        <input type="submit" value="Upload Image" name="submit">
+
+      </form>
+      <p>To do:</p>
+      <ul>
+        <li>thumbnaile</li>
+        <li>zmiana nazw plików</li>
+        <li>zmiana rozmiarów plików</li>
+        <li>redirect na upload po uploadzie</li>
+        <li>foldery</li>
+      </ul>
     </div>
-
-
-    <form action="api/upload.php" method="post" enctype="multipart/form-data">
-      Select image to upload:
-      <input type="file" name="fileToUpload" id="fileToUpload">
-      <input type="submit" value="Upload Image" name="submit">
-
-    </form>
-    <p>To do:</p>
-    <ul>
-      <li>wystające obrazki</li>
-      <li>zmiana nazw plików</li>
-      <li>zmiana rozmiarów plików</li>
-      <li>redirect na upload po uploadzie</li>
-      <li>foldery</li>
-    </ul>
-  </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
@@ -70,25 +97,31 @@
     let app = new Vue({
       el: '#app',
       data: {
-        files: []
+        files: [],
+        folder: 'zakopane'
       },
       mounted() {
-        let self = this;
-        fetch('viewfiles.php').then((res) => res.json()).then((res) => { self.files = res; self.files.splice(0, 2) });
+        this.loadData();
       },
       methods: {
         getFileExt(file) {
           return file.split('.').pop();
         },
-        prepareName(str){
+        prepareName(str) {
           let parts = str.split('.');
           let name = parts[0]
           let ext = parts[1]
-          if (parts[0].length > 10) name = name.slice(0,10)+'...' ;
-          return   name+'.'+ext;
+          if (parts[0].length > 10) name = name.slice(0, 10) + '...';
+          return name + '.' + ext;
+
+        },
+        loadData() {
+          let self = this;
+          fetch('viewfiles.php?folder=' + this.folder).then((res) => res.json()).then((res) => { self.files = res; self.files.splice(0, 2) });
 
         }
-      }
+      },
+
     })
 
   </script>

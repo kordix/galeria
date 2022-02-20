@@ -1,6 +1,17 @@
 <?php
+
+require 'env.php';
+
+@$folder = $_GET['folder'];
+
 $base =  realpath('');
-$dir    = $base.'/uploads';
+$dir    = $base.$ukosnik.'uploads';
+
+if (isset($folder)){
+    $dir .= $ukosnik;
+    $dir .= $folder;
+}
+
 $files1 = scandir($dir);
 // $files2 = scandir($dir, 1);
 
