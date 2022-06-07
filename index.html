@@ -14,18 +14,28 @@
     }
 
     .folder {
-      width: 150px;
-      height: 150px;
       padding: 10px;
       margin: 5px;
       border: 1px black solid;
       cursor: pointer;
+      font-weight:bold;
+      color: #007bff;
+    }
+
+    .folder:hover{
+      opacity:0.6
     }
 
 
     .file>p {
       word-wrap: break-word
     }
+
+    .activefolder{
+      background:#E6F4F1;
+    }
+
+ 
   </style>
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -38,19 +48,11 @@
 
   <div style="width:90%;margin:auto" id="app">
     <div>
-      <a href="/uploading.html"
-        style="margin-right:50px;font-size:20px;text-decoration:none;font-family:arial">Uploading strona</a>
+      <!-- <a href="/uploading.html" style="margin-right:50px;font-size:20px;text-decoration:none;font-family:arial">Uploading strona</a> -->
 
       <div style="display:flex;flex-wrap:wrap;">
-        <div class="folder" @click="folder='zakopane';loadData()">
-          <p>Zakopane</p>
-        </div>
-
-        <div class="folder" @click="folder='inne';loadData()">
-          <p>Inne</p>
-        </div>
-
-
+          <p @click="folder='journeys';loadData()" class="folder" :class="{activefolder:folder=='journeys'}">Podróże</p>
+          <p @click="folder='inne';loadData()" class="folder" :class="{activefolder:folder=='inne'}">Inne </p>
       </div>
 
 
@@ -64,7 +66,7 @@
 
             <p><a :href="'/uploads/'+folder+'/'+file">{{prepareName(file)}}</a></p>
             <img :src="'/uploads/'+folder+'/'+file" style="max-height:100px" alt="obrazek"
-              v-if="getFileExt(file) == 'jpg'" class="img-fluid">
+              v-if="getFileExt(file) == 'jpg' || getFileExt(file) == 'png'" class="img-fluid">
 
 
           </div>
@@ -75,7 +77,7 @@
 
 
       <form :action="'api/upload.php?folder='+folder" method="post" enctype="multipart/form-data">
-        Select image to upload:
+        Dodaj zdjęcie:
         <input type="file" name="fileToUpload" id="fileToUpload">
         <input type="submit" value="Upload Image" name="submit">
 
