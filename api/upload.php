@@ -3,6 +3,14 @@
 
 <head>
   <title>Upload plików</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<style>
+  label{
+    font-weight:bold;
+  }
+</style>
 </head>
 
 <body>
@@ -15,16 +23,18 @@
       <br><br>
       <form action="/api/upload.php" method="post" enctype="multipart/form-data">
     
-        <label for="">Folder</label>
+        <label for=""> Folder:</label>
         <select name="folder">
           <option value="journeys">Podróże</option>
+          <option value="pliki">Pliki</option>
+
           <option value="inne">INNE</option>
         </select>
 
-        <label for="">Nazwa pliku</label>
+        <label for="">Nazwa pliku:</label>
         <input type="text" name="filename">
 
-        Dodaj plik:
+        <label for=""> Dodaj plik:</label>
         <input type="file" name="fileToUpload" id="fileToUpload">
         <input type="submit" value="Upload Image" name="submit">
 
@@ -59,7 +69,7 @@ if (count($_FILES) == 0) {
   if (isset($_POST["submit"])) {
       $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
       if ($check !== false) {
-          echo "File is an image - " . $check["mime"] . ".";
+          echo "Jest obrazek - " . $check["mime"] . ".";
           $uploadOk = 1;
       } else {
           // echo "File is not an image.";
@@ -69,13 +79,13 @@ if (count($_FILES) == 0) {
 
   // Check if file already exists
   if (file_exists($target_file)) {
-      echo "Sorry, file already exists.";
+      echo "JEST JUŻ PLIK O TEJ NAZWIE W TYM FOLDERZE";
       $uploadOk = 0;
   }
 
   // Check file size
   if ($_FILES["fileToUpload"]["size"] > 7000000) {
-      echo "Sorry, your file is too large.";
+      echo "PLIK JEST ZA DUŻY";
       $uploadOk = 0;
   }
 
@@ -88,13 +98,13 @@ if (count($_FILES) == 0) {
 
   // Check if $uploadOk is set to 0 by an error
   if ($uploadOk == 0) {
-      echo "Sorry, your file was not uploaded.";
+      echo "Sorry, plik nie został zuploadowany";
   // if everything is ok, try to upload file
   } else {
       if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-          echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
+          echo "Plik " . basename($_FILES["fileToUpload"]["name"]) . " został wrzucony.";
       } else {
-          echo "Sorry, there was an error uploading your file.";
+          echo "Sory, wystąpił jakiś błąd";
       }
   }
 

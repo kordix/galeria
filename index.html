@@ -52,8 +52,12 @@
 
       <div style="display:flex;flex-wrap:wrap;">
           <p @click="folder='journeys';loadData()" class="folder" :class="{activefolder:folder=='journeys'}">Podróże</p>
-          <p @click="folder='inne';loadData()" class="folder" :class="{activefolder:folder=='inne'}">Inne </p>
+          <p @click="folder='pliki';loadData()" class="folder" :class="{activefolder:folder=='pliki'}">Pliki </p>
+          <p @click="folder='various';loadData()" class="folder" :class="{activefolder:folder=='various'}">Różne </p>
       </div>
+
+
+      <p style="display:none" @click="folder='inne';loadData()" class="folder" :class="{activefolder:folder=='inne'}">Inne </p>
 
 
 
@@ -75,20 +79,15 @@
 
       </div>
 
+      <br><br><br>
 
-      <form :action="'api/upload.php?folder='+folder" method="post" enctype="multipart/form-data">
-        Dodaj zdjęcie:
-        <input type="file" name="fileToUpload" id="fileToUpload">
-        <input type="submit" value="Upload Image" name="submit">
-
-      </form>
+     <a href="/api/upload.php"><button class="btn btn-primary">Dodaj</button></a>
+     
+      <br><br><br><br><br><br><br><br>
       <p>To do:</p>
       <ul>
         <li>thumbnaile</li>
-        <li>zmiana nazw plików</li>
-        <li>zmiana rozmiarów plików</li>
-        <li>redirect na upload po uploadzie</li>
-        <li>foldery</li>
+        <li>zmiana nazw plików , usuwanie</li>
       </ul>
     </div>
   </div>
@@ -113,7 +112,7 @@
           let parts = str.split('.');
           let name = parts[0]
           let ext = parts[1]
-          if (parts[0].length > 10) name = name.slice(0, 10) + '...';
+          if (parts[0].length > 10) name = name.slice(0, 8) + '...';
           return name + '.' + ext;
 
         },
