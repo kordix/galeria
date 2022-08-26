@@ -37,7 +37,7 @@
       background:#E6F4F1;
     }
 
-    #galerianavitem{
+    .active{
     font-weight:bold;
     border:1px gray solid;
     color: rgba(0,0,0,.7);
@@ -73,20 +73,20 @@
 
       <p style="display:none" @click="folder='inne';loadData()" class="folder" :class="{activefolder:folder=='inne'}">Inne </p>
 
-      <div style="display:flex;flex-wrap:wrap;margin-bottom:50px">
-        <div v-for="(elem,index) in files" class="galeria">
-          <div class="file" :class="{marginedit:editmode}" :num="index">
-          <button v-if="editmode" class="btn-sm btn-danger" @click="usun(elem)" style="border-radius:100%;position:absolute;left: 120px;top:0px">x</button>
-          <button v-if="editmode" class="btn-sm btn-warning" @click="rename(elem)" style="position:absolute;bottom: -40px;">rename</button>
-          <button v-if="editmode" class="btn-sm btn-info" @click="resize(elem)" style="position:absolute;bottom:-40px;left:80px;">resize</button>
+      <div style="display:flex;flex-wrap:wrap;margin-bottom:50px" class="galeria">
+          <div v-for="(elem,index) in files" >
+            <div class="file" :class="{marginedit:editmode}" :num="index">
+            <button v-if="editmode" class="btn-sm btn-danger" @click="usun(elem)" style="border-radius:100%;position:absolute;left: 120px;top:0px">x</button>
+            <button v-if="editmode" class="btn-sm btn-warning" @click="rename(elem)" style="position:absolute;bottom: -40px;">rename</button>
+            <button v-if="editmode" class="btn-sm btn-info" @click="resize(elem)" style="position:absolute;bottom:-40px;left:80px;">resize</button>
 
 
-            <p><a :href="'/uploads/'+folder+'/'+elem">{{prepareName(elem)}}</a></p>
-            <img :num="index" :src="'/uploads/'+folder+'/'+elem" style="max-height:100px" alt="obrazek" v-if="getFileExt(elem) == 'jpg' || getFileExt(elem) == 'png'" class="img-fluid">
+              <p><a :href="'/uploads/'+folder+'/'+elem">{{prepareName(elem)}}</a></p>
+              <img :num="index" :src="'/uploads/'+folder+'/'+elem" style="max-height:100px" alt="obrazek" v-if="getFileExt(elem) == 'jpg' || getFileExt(elem) == 'png'" class="img-fluid">
 
-   
+    
+            </div>
           </div>
-        </div>
       </div>
 
       <div v-if="renaming">
@@ -124,6 +124,9 @@
 
 
   <script>
+    document.querySelector('.navbar-nav').querySelector(`a[href="${window.location.pathname}"]`).classList.add('active');
+
+
     let app = new Vue({
       el: '#app',
       data: {

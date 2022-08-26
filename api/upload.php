@@ -10,16 +10,25 @@
   label{
     font-weight:bold;
   }
+
+  .active{
+    font-weight:bold;
+    border:1px gray solid;
+    color: rgba(0,0,0,.7);
+  }
+
 </style>
 </head>
 
 <body>
 
 
+<?php require '../navbar.php'; ?> 
 
-  <div style="display:flex;width:90%;margin:auto">
+
+  <div class="container mt-2">
     <div>
-      <a href="/" style="margin-right:50px;font-size:20px;text-decoration:none;font-family:arial">Main page</a>
+      <!-- <a href="/" style="margin-right:50px;font-size:20px;text-decoration:none;font-family:arial">Main page</a> -->
       <br><br>
       <form action="/api/upload.php" method="post" enctype="multipart/form-data">
     
@@ -42,6 +51,9 @@
     </div>
   </div>
 
+  <script>
+    document.querySelector('.navbar-nav').querySelector(`a[href="${window.location.pathname}"]`).classList.add('active');
+  </script>
 
   <?php
   define('SITE_ROOT', realpath(dirname(__FILE__)));
