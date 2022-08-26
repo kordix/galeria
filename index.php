@@ -11,8 +11,10 @@
       height: 150px;
       padding: 10px;
       margin: 5px;
-      border: 1px black solid;
+      border: 1px #AAA solid;
       position:relative;
+      box-shadow:-2px -2px 2px #CCC;
+      cursor:pointer;
     }
 
     .folder {
