@@ -62,6 +62,13 @@
   $uploadOk = 1;
   $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
+
+  if ($imageFileType == 'php'){
+    echo 'niedozwolony plik';
+    return;
+   }
+
+
   $nazwapliku = $_POST['filename'];
   if ($nazwapliku == '') {
       $nazwapliku = $_FILES["fileToUpload"]["name"];

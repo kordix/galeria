@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Upload plików</title>
+  <link rel="stylesheet" href="lightbox.css">
+  <title>Galeria</title>
   <style>
     .file {
       width: 150px;
@@ -73,15 +74,15 @@
       <p style="display:none" @click="folder='inne';loadData()" class="folder" :class="{activefolder:folder=='inne'}">Inne </p>
 
       <div style="display:flex;flex-wrap:wrap;margin-bottom:50px">
-        <div v-for="elem in files">
-          <div class="file" :class="{marginedit:editmode}">
+        <div v-for="(elem,index) in files" class="galeria">
+          <div class="file" :class="{marginedit:editmode}" :num="index">
           <button v-if="editmode" class="btn-sm btn-danger" @click="usun(elem)" style="border-radius:100%;position:absolute;left: 120px;top:0px">x</button>
           <button v-if="editmode" class="btn-sm btn-warning" @click="rename(elem)" style="position:absolute;bottom: -40px;">rename</button>
           <button v-if="editmode" class="btn-sm btn-info" @click="resize(elem)" style="position:absolute;bottom:-40px;left:80px;">resize</button>
 
 
             <p><a :href="'/uploads/'+folder+'/'+elem">{{prepareName(elem)}}</a></p>
-            <img :src="'/uploads/'+folder+'/'+elem" style="max-height:100px" alt="obrazek" v-if="getFileExt(elem) == 'jpg' || getFileExt(elem) == 'png'" class="img-fluid">
+            <img :num="index" :src="'/uploads/'+folder+'/'+elem" style="max-height:100px" alt="obrazek" v-if="getFileExt(elem) == 'jpg' || getFileExt(elem) == 'png'" class="img-fluid">
 
    
           </div>
@@ -95,6 +96,11 @@
       </div>
 
       <br><br><br>
+
+      <div id="lightbox">
+          <img id="lightbox-img">
+          <button class="btn btn-success" id="gallerynextbutton">Next</button>
+      </div>
 
     <button class="btn btn-warning" @click="editmode = !editmode">Edytuj</button>
      
@@ -115,6 +121,7 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
+
 
   <script>
     let app = new Vue({
@@ -138,8 +145,12 @@
           let parts = str.split('.');
           let name = parts[0]
           let ext = parts[1]
-          if (parts[0].length > 10) name = name.slice(0, 8) + '...';
+          if (parts[0].length > 15) name = name.slice(0, 15) + '...';
+        if (ext == 'jpg') {
+            return name ;
+        }else{
           return name + '.' + ext;
+        }
 
         },
         loadData() {
@@ -162,7 +173,7 @@
         },
         resize(file){
           console.log(file);
-          fetch('/api/converter.php?folder=' + this.folder + '&image='+file).then((res) => {});
+          fetch('/api/converter.php?folder=' + this.folder + '&image='+file).then((res) => {location.reload()});
 
         }
       },
@@ -170,6 +181,9 @@
     })
 
   </script>
+
+
+<script src="lightbox.js"></script>
 
 </body>
 
