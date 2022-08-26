@@ -42,6 +42,10 @@
     color: rgba(0,0,0,.7);
   }
 
+  .marginedit{
+    margin-bottom:50px;
+  }
+
  
   </style>
 
@@ -70,7 +74,7 @@
 
       <div style="display:flex;flex-wrap:wrap;margin-bottom:50px">
         <div v-for="elem in files">
-          <div class="file">
+          <div class="file" :class="{marginedit:editmode}">
           <button v-if="editmode" class="btn-sm btn-danger" @click="usun(elem)" style="border-radius:100%;position:absolute;left: 120px;top:0px">x</button>
           <button v-if="editmode" class="btn-sm btn-warning" @click="rename(elem)" style="position:absolute;bottom: -40px;">rename</button>
           <button v-if="editmode" class="btn-sm btn-info" @click="resize(elem)" style="position:absolute;bottom:-40px;left:80px;">resize</button>
