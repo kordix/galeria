@@ -3,16 +3,13 @@
 
 @$folder = $_GET['folder'];
 
-@$image = $_GET['nazwa'];
-
-@$newimage = $_GET['nazwa2'];
+@$image = $_GET['image'];
 
 $imagestring = '../uploads/'.$folder.'/'.$image;
-$targetimagestring = '../uploads/'.$folder.'/'.$newimage;
 
+echo $imagestring;
 
-
-rename($imagestring,$targetimagestring);
+unlink($imagestring);
 
 
 // imagedestroy($dest);

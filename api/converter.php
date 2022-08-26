@@ -5,7 +5,7 @@
 
 @$image = $_GET['image'];
 
-$targetimagestring = '../uploads/'.$folder.'/'.$image.'.jpg';
+$targetimagestring = '../uploads/'.$folder.'/'.$image;
 
 $src = imagecreatefromjpeg($targetimagestring);
 
@@ -21,7 +21,7 @@ $src = imagescale($src, $width,$height);
 
 // Output and free from memory
 //header('Content-Type: image/jpg');
-imagejpeg($src,'../uploads/'.$folder.'/'.$image.'_T.jpg');
+imagejpeg($src,'../uploads/'.$folder.'/'.str_replace('.jpg','',$image).'_T.jpg');
 
 // imagedestroy($dest);
 // imagedestroy($src);

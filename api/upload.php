@@ -51,17 +51,24 @@
 
   @$folder = $_POST['folder'];
 
- echo @$folder;
+  echo @$folder;
 
-if (count($_FILES) == 0) {
-    return;
-}
+  if (count($_FILES) == 0) {
+      return;
+  }
 
-   $target_file = $target_dir . $folder . '/'. basename($_FILES["fileToUpload"]["name"]);
-   
-   $uploadOk = 1;
-   $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-   $target_file = $target_dir . $folder . '/'. basename($_POST['filename'].'.'.$imageFileType);
+  $target_file = $target_dir . $folder . '/'. basename($_FILES["fileToUpload"]["name"]);
+
+  $uploadOk = 1;
+  $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+  $nazwapliku = $_POST['filename'];
+  if ($nazwapliku == '') {
+      $nazwapliku = $_FILES["fileToUpload"]["name"];
+  }
+
+
+  $target_file = $target_dir . $folder . '/'. basename($nazwapliku.'.'.$imageFileType);
 
 
 
