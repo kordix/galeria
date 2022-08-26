@@ -145,7 +145,7 @@
           let parts = str.split('.');
           let name = parts[0]
           let ext = parts[1]
-          if (parts[0].length > 15) name = name.slice(0, 15) + '...';
+          if (parts[0].length > 12) name = name.slice(0, 12) + '...';
         if (ext == 'jpg') {
             return name ;
         }else{

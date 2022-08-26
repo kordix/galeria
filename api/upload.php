@@ -27,7 +27,7 @@
         <select name="folder">
           <option value="journeys">Podróże</option>
           <option value="pliki">Pliki</option>
-
+          <option value="various">Różne</option>
           <option value="inne">INNE</option>
         </select>
 
