@@ -52,8 +52,10 @@
  
   </style>
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  </script>
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="mybootstrap.css">
+
+</script>
 </head>
 
 <body>
@@ -106,18 +108,7 @@
 
     <button class="btn btn-warning" @click="editmode = !editmode">Edytuj</button>
      
-      <br><br><br><br><br><br><br><br>
-      <p>To do:</p>
-      <ul>
-        <li>do wyboru z thumbnailami , bez , oba</li>
-        <li>Podpięcie api/rename.php api/converter.php pod interfejs</li>
-        <li>dodawanie</li>
-        <li>zcrudowanie categorii</li>
-        <li>usuwanie</li>
-        <li>podpięcie lightboxa</li>
-
-
-      </ul>
+   
     </div>
   </div>
   </div>
