@@ -36,23 +36,33 @@
       <br><br>
       <form action="/api/upload.php" method="post" enctype="multipart/form-data">
 
-        <label for=""> Folder:</label>
-        <select name="folder">
-          <option value="journeys">Podróże</option>
-          <option value="pliki">Pliki</option>
-          <option value="various">Różne</option>
-          <option value="inne">INNE</option>
-          <option value="wspomnienia">Wspomnienia</option>
-          <option value="cringe">CRINGE</option>
+        <div class="mb-2">
+          <label for=""> Folder:</label>
+          <select name="folder">
+            <option value="journeys">Podróże</option>
+            <option value="pliki">Pliki</option>
+            <option value="various">Różne</option>
+            <option value="inne">INNE</option>
+            <option value="wspomnienia">Wspomnienia</option>
+            <option value="cringe">CRINGE</option>
 
-        </select>
+          </select>
+        </div>
 
-        <label for="">Nazwa pliku:</label>
-        <input type="text" name="filename">
 
-        <label for=""> Dodaj plik:</label>
-        <input type="file" name="fileToUpload" id="fileToUpload">
-        <input type="submit" value="Upload Image" name="submit">
+        <div class="mb-2">
+
+          <label for="">Nazwa pliku:</label>
+          <input type="text" name="filename">
+        </div>
+
+
+        <div class="mb-2">
+
+          <label for=""> Dodaj plik:</label>
+          <input type="file" name="fileToUpload" id="fileToUpload">
+          <input type="submit" value="Upload Image" name="submit">
+        </div>
 
       </form>
 
