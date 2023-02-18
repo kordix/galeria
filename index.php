@@ -72,6 +72,8 @@
           <p @click="folder='journeys';loadData()" class="folder" :class="{activefolder:folder=='journeys'}">Podróże</p>
           <p @click="folder='pliki';loadData()" class="folder" :class="{activefolder:folder=='pliki'}">Pliki </p>
           <p @click="folder='various';loadData()" class="folder" :class="{activefolder:folder=='various'}">Różne </p>
+          <p @click="folder='cringe';loadData()" class="folder" :class="{activefolder:folder=='wspomnienia'}">Wspomnienia </p>
+          <p @click="folder='cringe';loadData()" class="folder" :class="{activefolder:folder=='cringe'}">Cringe </p>
       </div>
 
 

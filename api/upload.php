@@ -40,6 +40,9 @@
           <option value="pliki">Pliki</option>
           <option value="various">Różne</option>
           <option value="inne">INNE</option>
+          <option value="wspomnienia">Wspomnienia</option>
+          <option value="cringe">CRINGE</option>
+
         </select>
 
         <label for="">Nazwa pliku:</label>
@@ -50,8 +53,7 @@
         <input type="submit" value="Upload Image" name="submit">
 
       </form>
-    </div>
-  </div>
+   
 
   <script>
     document.querySelector('.navbar-nav').querySelector(`a[href="${window.location.pathname}"]`).classList.add('active');
@@ -137,3 +139,6 @@
   }
 
   ?>
+
+  </div>
+</div>
