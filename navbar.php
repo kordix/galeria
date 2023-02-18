@@ -38,7 +38,7 @@
 
   <nav class="navbar shadow-sm">
       <div class="container">
-        <a id="navbar-brand" href="/">Galeria</a>
+        <!-- <a id="navbar-brand" href="/">Galeria</a> -->
 
         
         <button id="hamburger" class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
