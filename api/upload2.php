@@ -1,40 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Upload plików</title>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="../mybootstrap.css">
+
+
+  <style>
+    label {
+      font-weight: bold;
+    }
+
+    .active {
+      font-weight: bold;
+      border: 1px gray solid;
+      color: rgba(0, 0, 0, .7);
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <?php require '../navbar.php'; ?>
+
+<div class="container">
+
+<br>
+    <form action="/api/upload2.php" method="post" enctype="multipart/form-data">
+
+        <div class="mb-2">
+            <label for=""> Folder:</label>
+            <select name="folder">
+                <option value="journeys">Podróże</option>
+                <option value="pliki">Pliki</option>
+                <option value="various">Różne</option>
+                <option value="inne">INNE</option>
+                <option value="wspomnienia">Wspomnienia</option>
+                <option value="cringe">CRINGE</option>
+
+            </select>
+        </div>
+
+
+        <div class="mb-2">
+
+            <label for="">Nazwa pliku:</label>
+            <input type="text" name="filename">
+        </div>
+
+
+        <div class="mb-2">
+
+            <label for=""> Dodaj plik:</label>
+            <input type="file" name="file" id="fileToUpload">
+            <input type="submit" value="Upload Image" name="submit">
+        </div>
+
+    </form>
+
 <canvas id="mycanvas"></canvas>
 
-<form action="/api/upload2.php" method="post" enctype="multipart/form-data">
 
-    <div class="mb-2">
-        <label for=""> Folder:</label>
-        <select name="folder">
-            <option value="journeys">Podróże</option>
-            <option value="pliki">Pliki</option>
-            <option value="various">Różne</option>
-            <option value="inne">INNE</option>
-            <option value="wspomnienia">Wspomnienia</option>
-            <option value="cringe">CRINGE</option>
+</div>
 
-        </select>
-    </div>
-
-
-    <div class="mb-2">
-
-        <label for="">Nazwa pliku:</label>
-        <input type="text" name="filename">
-    </div>
-
-
-    <div class="mb-2">
-
-        <label for=""> Dodaj plik:</label>
-        <input type="file" name="file" id="fileToUpload">
-        <input type="submit" value="Upload Image" name="submit">
-    </div>
-
-</form>
-
+</body>
 
 
 <script>
+    
+document.querySelector('.navbar-nav').querySelector(`a[href="${window.location.pathname}"]`).classList.add('active');
+
     // Get the input element where the user selects the file
     const input = document.querySelector('input[type="file"]');
 
@@ -117,29 +158,31 @@
 
 <?php
 // Get the uploaded file
-$file = $_FILES['file']['tmp_name'];
+@$file = $_FILES['file']['tmp_name'];
 
 @$folder = $_POST['folder'];
 
 
-// Set the upload directory
+if ($file) {
+    // Set the upload directory
 
 
-$upload_dir = "../uploads/" . $folder . '/';
+    $upload_dir = "../uploads/" . $folder . '/';
 
-// Generate a unique filename for the uploaded file
-$filename = $_FILES['file']['name'];
+    // Generate a unique filename for the uploaded file
+    @$filename = $_FILES['file']['name'];
 
-// Set the target path for the uploaded file
-$target_path = $upload_dir . $filename;
+    // Set the target path for the uploaded file
+    @$target_path = $upload_dir . $filename;
 
-// Move the uploaded file to the target path
-if (move_uploaded_file($file, $target_path)) {
-    // File was successfully uploaded
-    echo "File uploaded successfully: " . $filename;
-} else {
-    // Error uploading file
-    echo "Error uploading file";
+    // Move the uploaded file to the target path
+    if (move_uploaded_file($file, $target_path)) {
+        // File was successfully uploaded
+        echo "File uploaded successfully: " . $filename;
+    } else {
+        // Error uploading file
+        echo "Error uploading file";
+    }
 }
 
 
