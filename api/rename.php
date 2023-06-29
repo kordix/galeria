@@ -1,4 +1,7 @@
 <?php
+
+
+return;
 // Create image instances
 
 @$folder = $_GET['folder'];

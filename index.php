@@ -61,6 +61,7 @@
 
   <?php require 'navbar.php'; ?>
 
+  <?php echo $_SERVER['HTTP_HOST']; ?>
 
 
   <div class="container mt-2">
@@ -68,6 +69,7 @@
       <!-- <a href="/uploading.html" style="margin-right:50px;font-size:20px;text-decoration:none;font-family:arial">Uploading strona</a> -->
 
       <div style="display:flex;flex-wrap:wrap;">
+        <p @click="folder='upload';loadData()" class="folder" :class="{activefolder:folder=='upload'}">Upload</p>
         <p @click="folder='journeys';loadData()" class="folder" :class="{activefolder:folder=='journeys'}">Podróże</p>
         <p @click="folder='pliki';loadData()" class="folder" :class="{activefolder:folder=='pliki'}">Pliki </p>
         <p @click="folder='various';loadData()" class="folder" :class="{activefolder:folder=='various'}">Różne </p>

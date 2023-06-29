@@ -29,6 +29,11 @@
 
   <?php require '../navbar.php'; ?>
 
+    <?php
+
+      
+    ?>
+
 <div class="container">
 
 <br>
@@ -36,7 +41,8 @@
 
         <div class="mb-2">
             <label for=""> Folder:</label>
-            <select name="folder">
+            <select name="folder" id="folder">
+                <option value="upload">Upload</option>
                 <option value="journeys">Podróże</option>
                 <option value="pliki">Pliki</option>
                 <option value="various">Różne</option>
@@ -62,6 +68,8 @@
             <input type="submit" value="Upload Image" name="submit">
         </div>
 
+        <p id="loading" style="opacity:0;color:red"><b>Ładowanie...</b></p>
+
     </form>
 
 <canvas id="mycanvas"></canvas>
@@ -73,6 +81,8 @@
 
 
 <script>
+
+
     
 document.querySelector('.navbar-nav').querySelector(`a[href="${window.location.pathname}"]`).classList.add('active');
 
@@ -124,11 +134,24 @@ document.querySelector('.navbar-nav').querySelector(`a[href="${window.location.p
                 // Create a new FormData object and append the blob to it
                 const formData = new FormData();
                 formData.append('file', blob, file.name);
+            
+                formData.append('folder', document.querySelector('#folder').value );
+
+
+                
 
                 // Send the form data to the server using AJAX
-                const xhr = new XMLHttpRequest();
-                xhr.open('POST', 'upload2.php');
-                xhr.send(formData);
+
+                document.querySelector('#loading').style.opacity = 1;
+
+                fetch('upload2.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(function(response) {
+                    document.querySelector('#loading').style.opacity = 0;
+                })
+            
             });
 
             // Set the image source to the data URL
@@ -160,30 +183,85 @@ document.querySelector('.navbar-nav').querySelector(`a[href="${window.location.p
 // Get the uploaded file
 @$file = $_FILES['file']['tmp_name'];
 
-@$folder = $_POST['folder'];
+ # @$folder = $_POST['folder'];
 
 
-if ($file) {
-    // Set the upload directory
+ $folder = 'upload';
 
 
-    $upload_dir = "../uploads/" . $folder . '/';
-
-    // Generate a unique filename for the uploaded file
-    @$filename = $_FILES['file']['name'];
-
-    // Set the target path for the uploaded file
-    @$target_path = $upload_dir . $filename;
-
-    // Move the uploaded file to the target path
-    if (move_uploaded_file($file, $target_path)) {
-        // File was successfully uploaded
-        echo "File uploaded successfully: " . $filename;
-    } else {
-        // Error uploading file
-        echo "Error uploading file";
-    }
-}
+  if ($file) {
+      // Set the upload directory
 
 
-?>
+      $upload_dir = "../uploads/" . $folder . '/';
+
+      // Generate a unique filename for the uploaded file
+      @$filename = $_FILES['file']['name'];
+
+
+
+      
+
+
+    $uploadOk = 1;
+
+      $check = getimagesize($_FILES["file"]["tmp_name"]);
+      if ($check !== false) {
+          echo "Jest obrazek - " . $check["mime"] . ".";
+          $uploadOk = 1;
+      } else {
+          echo "Plik nie jest obrazkiem. Mam nadzieję że nie chcesz przesłać jakiegoś syfu";
+
+          $uploadedFileExtension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+
+          $allowedExtensions = array('txt', 'doc', 'docx');
+
+          if (in_array($uploadedFileExtension, $allowedExtensions)) {
+              echo 'plik nie jest obrazkiem ale jest bezpieczny';
+          } else {
+              echo 'plik nie jest bezpeiczny';
+
+              $uploadOk = 0;
+
+          }
+
+      }
+
+
+
+
+
+
+
+
+      // Set the target path for the uploaded file
+      @$target_path = $upload_dir . $filename;
+
+
+
+      if($uploadOk) {
+
+        
+
+
+          sleep(2);
+
+          // Move the uploaded file to the target path
+          if (move_uploaded_file($file, $target_path)) {
+              // File was successfully uploaded
+              echo "File uploaded successfully: " . $target_path.$filename;
+
+
+
+          } else {
+              // Error uploading file
+              echo "Error uploading file";
+          }
+
+
+
+      }
+  }
+
+
+  ?>
