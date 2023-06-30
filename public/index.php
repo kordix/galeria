@@ -76,7 +76,7 @@
       <!-- <a href="/uploading.html" style="margin-right:50px;font-size:20px;text-decoration:none;font-family:arial">Uploading strona</a> -->
 
      <div style="display: flex; flex-wrap: wrap;" id="kategorie">
-          <div style="position: relative; width: 100px;" v-for="elem in categories">
+          <div style="position: relative;" v-for="elem in categories">
             <div class="kafelek">
               <p @click="category_id=elem.id" class="folder" :class="{activefolder:elem.id==category_id}">{{elem.title}}</p>
               <button v-if="editmode" class="btn-sm btn-danger" @click="deletecategory(elem.id)" style="position:absolute;top:0px;right:0px">x</button>
