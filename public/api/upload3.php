@@ -54,7 +54,7 @@ if ($file) {
         sleep(2);
 
         // Move the uploaded file to the target path
-        if (move_uploaded_file($file, $target_path)) {
+        if (move_uploaded_file($file, $_SERVER["DOCUMENT_ROOT"].'/uploads/upload/'.$filename )) {
             // File was successfully uploaded
             echo "File uploaded successfully: " . $target_path.$filename;
 
