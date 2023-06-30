@@ -122,10 +122,49 @@
 
 
       <div v-if="settingsbool">
-<br>
-      <input type="text" placeholder="dodaj kategorię" v-model="categoryadd">
-      <button @click="addcategory">Dodaj</button>
+        <br>
+        <input type="text" placeholder="dodaj kategorię" v-model="categoryadd">
+        <button @click="addcategory">Dodaj</button>
       </div>
+
+      <div v-show="uploadbool">
+          <form action="/api/upload3.php" method="post" enctype="multipart/form-data">
+
+          <div class="mb-2">
+              <label for=""> Folder:</label>
+              <select name="folder" id="folder">
+                  <option value="upload">Upload</option>
+                  <option value="journeys">Podróże</option>
+                  <option value="pliki">Pliki</option>
+                  <option value="various">Różne</option>
+                  <option value="inne">INNE</option>
+                  <option value="wspomnienia">Wspomnienia</option>
+                  <option value="cringe">CRINGE</option>
+
+              </select>
+          </div>
+
+
+          <!-- <div class="mb-2">
+
+              <label for="">Nazwa pliku:</label>
+              <input type="text" name="filename">
+          </div> -->
+
+
+          <div class="mb-2">
+              <label for=""> Dodaj plik:</label>
+              <input type="file" name="file" id="fileToUpload" @change="upload($event)">
+              <input type="submit" value="Upload File" name="submit" id="submitbutton" style="display:none">
+          </div>
+
+          <p id="loading" style="opacity:0;color:red"><b>Ładowanie...</b></p>
+
+      </form>
+
+      <canvas id="mycanvas"></canvas>
+
+    </div>
 
 
     </div>
@@ -135,8 +174,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"></script>
+
+
+<script src="upload.js">
+
+</script>
+
+
   <script>
-    document.querySelector('.navbar-nav').querySelector(`a[href="${window.location.pathname}"]`).classList.add('active');
+    // document.querySelector('.navbar-nav').querySelector(`a[href="${window.location.pathname}"]`).classList.add('active');
 
 
     let app = new Vue({
@@ -151,10 +197,12 @@
         newfilename: '',
         editmode: false,
         categories:[],
-        settingsbool:false
+        settingsbool:false,
+        uploadbool:false
       },
       mounted() {
         this.loadData();
+        // runUploadFunctionality();
 
       },
       computed:{
@@ -236,11 +284,81 @@
             location.reload()
           });
 
+        },
+        upload(event){
+          let self = this;
+            const file = event.target.files[0];
+
+        // Create a new FileReader object
+        const reader = new FileReader();
+
+        // Listen for the load event on the reader
+        reader.addEventListener('load', () => {
+            // Create a new image object
+            const img = new Image();
+
+
+            const fileType = file.type; // Get the MIME type of the file
+
+            // Check if the file type is an image
+            if (fileType.startsWith('image/')) {
+                console.log('File is an image.');
+            } else {
+                console.log('File is not an image.');
+                document.querySelector('#submitbutton').style.display = 'block'
+            }
+
+
+            // Listen for the load event on the image
+            img.addEventListener('load', () => {
+                // Create a canvas element
+                const canvas = document.getElementById('mycanvas');
+
+                // Get the canvas context
+                const ctx = canvas.getContext('2d');
+
+                let ratio = img.width / img.height;
+
+                if (img.width > 1200) {
+                    img.width = 1200;
+                    img.height = img.width / ratio;
+                }
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                const dataUrl = canvas.toDataURL();
+                const blob = dataURLtoBlob(dataUrl);
+
+                const formData = new FormData();
+                formData.append('file', blob, file.name);
+                formData.append('folder', document.querySelector('#folder').value);
+                document.querySelector('#loading').style.opacity = 1;
+
+                fetch('/api/upload3.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(function (response) {
+                        document.querySelector('#loading').style.opacity = 0;
+                        self.loadData()
+                    })
+
+            });
+
+            // Set the image source to the data URL
+            img.src = reader.result;
+        });
+
+        // Read the file data as a data URL
+        reader.readAsDataURL(file);
         }
+
+
       },
 
     })
   </script>
+
 
 
   <script src="lightbox.js"></script>

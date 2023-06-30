@@ -17,8 +17,8 @@
             <!-- <li class="nav-item">
               <a class="nav-link" aria-current="page" href="/views/dodaj.php">Dodawanie</a>
             </li> -->
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/api/upload2.php">Upload</a>
+            <li class="nav-item" @click="uploadbool = !uploadbool" style="cursor:pointer">
+                Upload
             </li>
           </ul>
 

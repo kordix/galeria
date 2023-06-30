@@ -19,6 +19,10 @@ grid.addEventListener("click", (e) => {
         return;
     }
 
+    if (e.target.nodeName == 'SELECT') {
+        return;
+    }
+
     lightbox.classList.add("active");
     lightboxImg.src = e.target.src;
     galleryindex = parseInt(e.target.getAttribute('num'));
