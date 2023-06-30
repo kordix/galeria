@@ -1,17 +1,16 @@
 <?php
 require_once($_SERVER["DOCUMENT_ROOT"].'/api/db.php');
 
-// $dane = new stdClass();
-// $dane->category_id = '1';
-// $dane->description = 'fdsa';
-// $dane->filename = 'testnowe.txt';
+
+$dane = json_decode(file_get_contents('php://input'));
+
 
 $kwerenda='';
 $kolumnystring = '';
 $wartosci = [];
 
 
-$allowed = ['category_id' , 'description','filename'];
+$allowed = ['description' , 'title'];
 
 $pytajniki = '';
 
@@ -30,7 +29,7 @@ foreach ($allowed as $key) {
     $pytajniki = substr($pytajniki, 0, -1);
 
 
-    $query = "INSERT INTO files ($kolumnystring ) values ($pytajniki) ";
+    $query = "INSERT INTO categories ($kolumnystring ) values ($pytajniki) ";
     $sth = $dbh->prepare($query);
     $sth->execute($wartosci);
 

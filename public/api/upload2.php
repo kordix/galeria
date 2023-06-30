@@ -31,13 +31,13 @@
 
     <?php
 
-      
-    ?>
+
+  ?>
 
 <div class="container">
 
 <br>
-    <form action="/api/upload2.php" method="post" enctype="multipart/form-data">
+    <form action="/api/upload3.php" method="post" enctype="multipart/form-data">
 
         <div class="mb-2">
             <label for=""> Folder:</label>
@@ -54,18 +54,18 @@
         </div>
 
 
-        <div class="mb-2">
+        <!-- <div class="mb-2">
 
             <label for="">Nazwa pliku:</label>
             <input type="text" name="filename">
-        </div>
+        </div> -->
 
 
         <div class="mb-2">
 
             <label for=""> Dodaj plik:</label>
             <input type="file" name="file" id="fileToUpload">
-            <input type="submit" value="Upload Image" name="submit">
+            <input type="submit" value="Upload File" name="submit" id="submitbutton" style="display:none">
         </div>
 
         <p id="loading" style="opacity:0;color:red"><b>Ładowanie...</b></p>
@@ -101,6 +101,18 @@ document.querySelector('.navbar-nav').querySelector(`a[href="${window.location.p
         reader.addEventListener('load', () => {
             // Create a new image object
             const img = new Image();
+
+            
+            const fileType = file.type; // Get the MIME type of the file
+
+            // Check if the file type is an image
+            if (fileType.startsWith('image/')) {
+                console.log('File is an image.');
+            } else {
+                console.log('File is not an image.');
+                document.querySelector('#submitbutton').style.display = 'block'
+            }
+
 
             // Listen for the load event on the image
             img.addEventListener('load', () => {
@@ -144,7 +156,7 @@ document.querySelector('.navbar-nav').querySelector(`a[href="${window.location.p
 
                 document.querySelector('#loading').style.opacity = 1;
 
-                fetch('upload2.php', {
+                fetch('upload3.php', {
                     method: 'POST',
                     body: formData
                 })
@@ -183,10 +195,9 @@ document.querySelector('.navbar-nav').querySelector(`a[href="${window.location.p
 // Get the uploaded file
 @$file = $_FILES['file']['tmp_name'];
 
- # @$folder = $_POST['folder'];
+  # @$folder = $_POST['folder'];
 
-
- $folder = 'upload';
+  $folder = 'upload';
 
 
   if ($file) {
@@ -200,10 +211,10 @@ document.querySelector('.navbar-nav').querySelector(`a[href="${window.location.p
 
 
 
-      
 
 
-    $uploadOk = 1;
+
+      $uploadOk = 1;
 
       $check = getimagesize($_FILES["file"]["tmp_name"]);
       if ($check !== false) {
@@ -226,30 +237,27 @@ document.querySelector('.navbar-nav').querySelector(`a[href="${window.location.p
           }
 
       }
-
-
-
-
-
-
-
-
       // Set the target path for the uploaded file
       @$target_path = $upload_dir . $filename;
 
 
 
       if($uploadOk) {
-
-        
-
-
           sleep(2);
 
           // Move the uploaded file to the target path
           if (move_uploaded_file($file, $target_path)) {
               // File was successfully uploaded
               echo "File uploaded successfully: " . $target_path.$filename;
+
+              $dane = new stdClass();
+              $dane->category_id = '1';
+              $dane->description = 'fdsa';
+              $dane->filename = $filename;
+
+
+              require_once($_SERVER["DOCUMENT_ROOT"].'/api/add.php');
+
 
 
 

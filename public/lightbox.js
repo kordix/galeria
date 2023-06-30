@@ -53,7 +53,7 @@ document.querySelector('#gallerynextbutton').addEventListener('click', function 
     }
     console.log(galleryindex);
     console.log(galleryimages[1]);
-    lightboxImg.src = '/uploads/journeys/'+galleryimages[galleryindex];
+    lightboxImg.src = '/uploads/upload/'+galleryimages[galleryindex].filename;
 
 
 
