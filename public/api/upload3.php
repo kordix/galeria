@@ -71,7 +71,7 @@ if ($file) {
 
         } else {
             // Error uploading file
-            echo "Error uploading file";
+            echo "Error uploading file". $_FILES['file']['error'];
         }
 
 
