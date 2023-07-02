@@ -17,7 +17,8 @@
   
   #lightbox img {
     max-width: 90%;
-    /* max-height: 70%; */
+    position:absolute;
+    max-height: 70%;
   }
   
 
