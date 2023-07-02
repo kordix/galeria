@@ -76,7 +76,7 @@
       <!-- <a href="/uploading.html" style="margin-right:50px;font-size:20px;text-decoration:none;font-family:arial">Uploading strona</a> -->
 
      <div style="display: flex; flex-wrap: wrap;" id="kategorie">
-          <div style="position: relative;" v-for="elem in categories">
+          <div style="position: relative;" v-for="elem in filteredCategories">
             <div class="kafelek">
               <p @click="category_id=elem.id" class="folder" :class="{activefolder:elem.id==category_id}">{{elem.title}}</p>
               <button v-if="editmode" class="btn-sm btn-danger" @click="deletecategory(elem.id)" style="position:absolute;top:0px;right:0px">x</button>
@@ -118,7 +118,13 @@
         <button class="btn btn-success" id="gallerynextbutton">Next</button>
       </div>
 
-      <button class="btn btn-warning" @click="editmode = !editmode">Edytuj</button>
+      <button class="btn btn-warning" @click="editmode = !editmode" v-if="adminmode">Edytuj</button>
+
+
+      <br><br><br><br><br>
+      <button @click="passwordbool = true" v-if="!passwordbool"></button>
+
+      <input v-model="password" v-if="passwordbool && !adminmode" type="password">
 
 
       <div v-if="settingsbool">
@@ -143,14 +149,6 @@
 
               </select>
           </div>
-
-
-          <!-- <div class="mb-2">
-
-              <label for="">Nazwa pliku:</label>
-              <input type="text" name="filename">
-          </div> -->
-
 
           <div class="mb-2">
               <label for=""> Dodaj plik:</label>
@@ -198,7 +196,9 @@
         editmode: false,
         categories:[],
         settingsbool:false,
-        uploadbool:false
+        uploadbool:false,
+        password:'',
+        passwordbool:false
       },
       mounted() {
         this.loadData();
@@ -206,9 +206,19 @@
 
       },
       computed:{
+        adminmode(){
+          return this.password == 'clubmate' ? true : false;
+        },
         filtered(){
           let self = this;
           return this.files.filter((el)=>el.category_id == self.category_id)
+        },
+        filteredCategories(){
+          if(this.adminmode){
+            return this.categories;
+          }else{
+            return this.categories.filter(el=>el.title != 'Cringe')
+          }
         }
       },
       methods: {

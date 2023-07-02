@@ -1,5 +1,10 @@
 <?php
 
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+
 // Get the uploaded file
 @$file = $_FILES['file']['tmp_name'];
 

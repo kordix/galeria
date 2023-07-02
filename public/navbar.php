@@ -22,7 +22,7 @@
             </li>
           </ul>
 
-            <ul class="navbar-nav mb-2 mb-lg-0" style="margin-left:auto">
+            <ul class="navbar-nav mb-2 mb-lg-0" style="margin-left:auto" v-if="adminmode">
               <li class="nav-item" @click="settingsbool = true">
                  <i class="bi bi-gear"></i>
               </li>
