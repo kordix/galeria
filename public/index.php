@@ -122,8 +122,7 @@
 
 
       <br><br><br><br><br>
-      <button @click="passwordbool = true" v-if="!passwordbool"></button>
-
+      
   
 
 
@@ -167,6 +166,8 @@
 
     </div>
   </div>
+  <button @click="passwordbool = true" v-if="!passwordbool"></button>
+
       <input v-model="password" v-if="passwordbool && !adminmode" type="password">
   </div>
 
