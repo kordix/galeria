@@ -71,7 +71,7 @@
 
   <?php require 'navbar.php'; ?>
 
-  <div class="container mt-2">
+  <div class="container mt-2" >
     <div>
       <!-- <a href="/uploading.html" style="margin-right:50px;font-size:20px;text-decoration:none;font-family:arial">Uploading strona</a> -->
 
@@ -124,7 +124,7 @@
       <br><br><br><br><br>
       <button @click="passwordbool = true" v-if="!passwordbool"></button>
 
-      <input v-model="password" v-if="passwordbool && !adminmode" type="password">
+  
 
 
       <div v-if="settingsbool">
@@ -167,6 +167,7 @@
 
     </div>
   </div>
+      <input v-model="password" v-if="passwordbool && !adminmode" type="password">
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
