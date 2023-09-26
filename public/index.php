@@ -71,7 +71,7 @@
 
   <?php require 'navbar.php'; ?>
 
-  <div class="container mt-2" >
+  <div class="container mt-2"  v-if="adminmode">
     <div>
       <!-- <a href="/uploading.html" style="margin-right:50px;font-size:20px;text-decoration:none;font-family:arial">Uploading strona</a> -->
 
